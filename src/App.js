@@ -1,9 +1,11 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 
 function App() {
   return (
     <div>
-      Redux Saga
+      <h1>Redux Saga</h1>
+      <Button variant="contained" color="primary">Đăng Nhập</Button>
     </div>
   );
 }
