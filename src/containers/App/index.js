@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
-import styles from './styles.js'
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
+import styles from './styles.js';
 import { withStyles } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core/styles';
+import TaskBoard from '../TaskBoard/index.js';
+import theme from '../../commons/Theme/index.js';
 
 class App extends Component {
   render() {
+    // console.log("props: ", this.props);
+    // const { classes } = this.props;
     return (
-      <div>
-        <h1>Redux Saga</h1>
-        <Button variant="contained" color="primary">Đăng Nhập</Button>
-      </div>
+      <ThemeProvider theme={theme}>
+        <TaskBoard></TaskBoard>
+      </ThemeProvider>
     );
   }
 }
