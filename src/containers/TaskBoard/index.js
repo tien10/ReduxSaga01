@@ -10,21 +10,21 @@ import TaskList from '../../components/TaskList/index.js';
 const listTask = [
   {
     id: 1,
-    title: "Mai",
-    description: "Mai Ngoc",
+    title: "An ủi Hậu",
+    description: "Tội nghiệp thằng bé",
     status: 0
   },
   {
     id: 2,
-    title: "Lan",
-    description: "Mai Ho Diep",
-    status: 2
+    title: "Chửi Hậu",
+    description: "Mê gái bỏ bạn",
+    status: 1
   },
   {
     id: 3,
-    title: "Cuc",
-    description: "Cuc Nguyen",
-    status: 1
+    title: "Code nút Edit và Delete",
+    description: "Xấu dã man con ngan",
+    status: 2
   }
 ];
 
@@ -54,7 +54,8 @@ class TaskBoard extends Component {
       <div className={classes.taskBoard} >
         <Button variant="contained" color="primary" className={classes.button}>
           <AddIcon />
-          Thêm user
+          {/* Thêm user */}
+          Thêm công việc
         </Button>
         {this.renderBoard()
         }
