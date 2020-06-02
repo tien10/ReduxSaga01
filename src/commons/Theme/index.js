@@ -1,3 +1,5 @@
+// cai gi dung chung dua vao commons
+// muon thay doi mau sac thi vao theme thay doi
 import { createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme({
     color: {

@@ -9,7 +9,9 @@ import theme from '../../commons/Theme/index.js';
 class App extends Component {
   render() {
     // console.log("props: ", this.props);
+    // props cua withStyles
     // const { classes } = this.props;
+    // classes la props cua withStyles
     return (
       <ThemeProvider theme={theme}>
         <TaskBoard></TaskBoard>
