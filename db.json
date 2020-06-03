@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "An ủi Hậu",
+      "description": "Tội nghiệp thằng bé",
+      "status": 0
+    },
+    {
+      "id": 2,
+      "title": "Chửi Hậu",
+      "description": "Mê gái bỏ bạn",
+      "status": 1
+    },
+    {
+      "id": 3,
+      "title": "Code nút Edit và Delete",
+      "description": "Xấu dã man con ngan",
+      "status": 2
+    },
+    {
+      "title": "install json server",
+      "description": "install json server thanh cong",
+      "status": "2",
+      "id": 4
+    }
+  ]
+}

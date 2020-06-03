@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
 // import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
-import styles from './styles';
-import TaskBoard from '../TaskBoard/index';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import theme from '../../commons/Theme/index';
+import configureStore from '../../redux/configureStore';
+import TaskBoard from '../TaskBoard/index';
+import styles from './styles';
+
+const store = configureStore();
 
 class App extends Component {
   render() {
@@ -13,9 +17,11 @@ class App extends Component {
     // const { classes } = this.props;
     // classes la props cua withStyles
     return (
-      <ThemeProvider theme={theme}>
-        <TaskBoard />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <TaskBoard />
+        </ThemeProvider>
+      </Provider>
     );
   }
 }
