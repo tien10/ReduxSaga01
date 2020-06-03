@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 // import Button from '@material-ui/core/Button';
-import styles from './styles.js';
 import { withStyles } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
-import TaskBoard from '../TaskBoard/index.js';
-import theme from '../../commons/Theme/index.js';
+import styles from './styles';
+import TaskBoard from '../TaskBoard/index';
+import theme from '../../commons/Theme/index';
 
 class App extends Component {
   render() {
@@ -14,7 +14,7 @@ class App extends Component {
     // classes la props cua withStyles
     return (
       <ThemeProvider theme={theme}>
-        <TaskBoard></TaskBoard>
+        <TaskBoard />
       </ThemeProvider>
     );
   }

@@ -35,40 +35,33 @@ class TaskBoard extends Component {
   // eslint-disable-next-line react/state-in-constructor
   state = {
     open: false,
-  }
+  };
 
   handleClose = () => {
     this.setState({
       open: false,
     });
-  }
+  };
 
   openForm = () => {
     this.setState({
       open: true,
     });
-  }
+  };
 
   renderBoard() {
     let xhtml = null;
     xhtml = (
-      <Grid
-        container
-        spacing={2}
-      >
-        {
-          STATUSES.map((status) => {
-            // vi du status co value la 1, se filter cac task co status la 1, in ra
-            const taskFilterd = listTask.filter((task) => task.status === status.value);
-            return (
-              <TaskList
-                tasks={taskFilterd}
-                status={status}
-                key={status.value}
-              />
-            );
-          })
-        }
+      <Grid container spacing={2}>
+        {STATUSES.map((status) => {
+          // vi du status co value la 1, se filter cac task co status la 1, in ra
+          const taskFilterd = listTask.filter(
+            (task) => task.status === status.value,
+          );
+          return (
+            <TaskList tasks={taskFilterd} status={status} key={status.value} />
+          );
+        })}
       </Grid>
     );
     return xhtml;
@@ -77,12 +70,7 @@ class TaskBoard extends Component {
   renderForm() {
     const { open } = this.state;
     let xhtml = null;
-    xhtml = (
-      <TaskForm
-        open={open}
-        onClose={this.handleClose}
-      />
-    );
+    xhtml = <TaskForm open={open} onClose={this.handleClose} />;
     return xhtml;
   }
 
