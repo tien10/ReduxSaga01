@@ -1,13 +1,16 @@
 /* eslint-disable class-methods-use-this */
-import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
+import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
-import { STATUSES } from '../../constants/index';
-import TaskList from '../../components/TaskList/index';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import TaskForm from '../../components/TaskForm/index';
+import TaskList from '../../components/TaskList/index';
+import * as taskActions from '../../actions/task';
+import { STATUSES } from '../../constants/index';
 import styles from './styles';
 
 const listTask = [
@@ -36,6 +39,12 @@ class TaskBoard extends Component {
   state = {
     open: false,
   };
+
+  componentDidMount() {
+    const { taskActionCreators } = this.props;
+    const { fetchListTask } = taskActionCreators;
+    fetchListTask();
+  }
 
   handleClose = () => {
     this.setState({
@@ -97,6 +106,16 @@ class TaskBoard extends Component {
 
 TaskBoard.propTypes = {
   classes: PropTypes.object,
+  taskActionCreators: PropTypes.shape({
+    fetchListTask: PropTypes.func,
+  }),
 };
 
-export default withStyles(styles)(TaskBoard);
+const mapStateToProps = null;
+const mapDispatchToProps = (dispatch) => {
+  return { taskActionCreators: bindActionCreators(taskActions, dispatch) };
+};
+
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(TaskBoard),
+);
