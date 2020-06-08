@@ -13,26 +13,26 @@ import * as taskActions from '../../actions/task';
 import { STATUSES } from '../../constants/index';
 import styles from './styles';
 
-const listTask = [
-  {
-    id: 1,
-    title: 'An ủi Hậu',
-    description: 'Tội nghiệp thằng bé',
-    status: 0,
-  },
-  {
-    id: 2,
-    title: 'Chửi Hậu',
-    description: 'Mê gái bỏ bạn',
-    status: 1,
-  },
-  {
-    id: 3,
-    title: 'Code nút Edit và Delete',
-    description: 'Xấu dã man con ngan',
-    status: 2,
-  },
-];
+// const listTask = [
+//   {
+//     id: 1,
+//     title: 'An ủi Hậu',
+//     description: 'Tội nghiệp thằng bé',
+//     status: 0,
+//   },
+//   {
+//     id: 2,
+//     title: 'Chửi Hậu',
+//     description: 'Mê gái bỏ bạn',
+//     status: 1,
+//   },
+//   {
+//     id: 3,
+//     title: 'Code nút Edit và Delete',
+//     description: 'Xấu dã man con ngan',
+//     status: 2,
+//   },
+// ];
 
 class TaskBoard extends Component {
   // eslint-disable-next-line react/state-in-constructor
@@ -42,8 +42,8 @@ class TaskBoard extends Component {
 
   componentDidMount() {
     const { taskActionCreators } = this.props;
-    const { fetchListTask } = taskActionCreators;
-    fetchListTask();
+    const { fetchListTaskRequest } = taskActionCreators;
+    fetchListTaskRequest();
   }
 
   handleClose = () => {
@@ -59,6 +59,7 @@ class TaskBoard extends Component {
   };
 
   renderBoard() {
+    const { listTask } = this.props;
     let xhtml = null;
     xhtml = (
       <Grid container spacing={2}>
@@ -107,11 +108,16 @@ class TaskBoard extends Component {
 TaskBoard.propTypes = {
   classes: PropTypes.object,
   taskActionCreators: PropTypes.shape({
-    fetchListTask: PropTypes.func,
+    fetchListTaskRequest: PropTypes.func,
   }),
+  listTask: PropTypes.array,
 };
 
-const mapStateToProps = null;
+const mapStateToProps = (state) => {
+  return {
+    listTask: state.task.listTask,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return { taskActionCreators: bindActionCreators(taskActions, dispatch) };
 };

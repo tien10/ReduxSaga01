@@ -21,7 +21,7 @@
     {
       "title": "install json server",
       "description": "install json server thanh cong",
-      "status": "2",
+      "status": 2,
       "id": 4
     }
   ]
