@@ -95,8 +95,8 @@ class TaskBoard extends Component {
           onClick={this.openForm}
         >
           <AddIcon />
-          {/* Thêm user */}
-          Thêm công việc
+          Thêm user
+          {/* Thêm công việc */}
         </Button>
         {this.renderBoard()}
         {this.renderForm()}
