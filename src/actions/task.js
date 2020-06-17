@@ -1,4 +1,4 @@
-import * as taskApis from '../apis/task';
+// import * as taskApis from '../apis/task';
 import * as taskConstants from '../constants/task';
 
 export const fetchListTask = () => {
@@ -23,22 +23,22 @@ export const fetchListTaskFailed = (error) => {
   };
 };
 
-export const fetchListTaskRequest = () => {
-  // eslint-disable-next-line no-unused-vars
-  return (dispatch) => {
-    dispatch(fetchListTask());
-    taskApis
-      .getList()
-      .then((resp) => {
-        const { data } = resp;
-        // eslint-disable-next-line no-console
-        // console.log('data: ', data);
-        dispatch(fetchListTaskSuccess(data));
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        // console.log('error: ', error);
-        dispatch(fetchListTaskFailed(error));
-      });
-  };
-};
+// export const fetchListTaskRequest = () => {
+//   // eslint-disable-next-line no-unused-vars
+//   return (dispatch) => {
+//     dispatch(fetchListTask());
+//     taskApis
+//       .getList()
+//       .then((resp) => {
+//         const { data } = resp;
+//         // eslint-disable-next-line no-console
+//         // console.log('data: ', data);
+//         dispatch(fetchListTaskSuccess(data));
+//       })
+//       .catch((error) => {
+//         // eslint-disable-next-line no-console
+//         // console.log('error: ', error);
+//         dispatch(fetchListTaskFailed(error));
+//       });
+//   };
+// };

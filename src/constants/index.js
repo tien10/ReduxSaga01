@@ -1,4 +1,4 @@
-export const API_ENDPOINT = 'http://localhost:3006';
+export const API_ENDPOINT = 'http://localhost:3000';
 
 export const STATUSES = [
   {
@@ -20,3 +20,9 @@ export const STATUSES = [
     label: 'ADMIN',
   },
 ];
+
+export const STATUES_CODE = {
+  SUCCESS: 200,
+  CREATED: 201,
+  UPDATED: 202,
+};
