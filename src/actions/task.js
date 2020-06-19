@@ -23,6 +23,24 @@ export const fetchListTaskFailed = (error) => {
   };
 };
 
+export const filterTask = (keyword) => {
+  return {
+    type: taskConstants.FILTER_TASK,
+    payload: {
+      keyword,
+    },
+  };
+};
+
+export const filterTaskSuccess = (data) => {
+  return {
+    type: taskConstants.FILTER_TASK_SUCCESS,
+    payload: {
+      data,
+    },
+  };
+};
+
 // export const fetchListTaskRequest = () => {
 //   // eslint-disable-next-line no-unused-vars
 //   return (dispatch) => {

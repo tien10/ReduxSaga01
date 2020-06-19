@@ -1,8 +1,20 @@
-import { fork, take, call, put, delay } from 'redux-saga/effects';
+import {
+  fork,
+  take,
+  call,
+  put,
+  delay,
+  takeLatest,
+  select,
+} from 'redux-saga/effects';
 import * as taskTypes from '../constants/task';
 import { getList } from '../apis/task';
 import { STATUES_CODE } from '../constants';
-import { fetchListTaskSuccess, fetchListTaskFailed } from '../actions/task';
+import {
+  fetchListTaskSuccess,
+  fetchListTaskFailed,
+  filterTaskSuccess,
+} from '../actions/task';
 import { showLoading, hideLoading } from '../actions/ui';
 
 /*
@@ -33,13 +45,30 @@ function* watchFetchListTaskAction() {
   }
 }
 
-function* watchCreateTaskAction() {
-  yield true;
-  console.log('watchCreateTaskAction');
+// function* watchCreateTaskAction() {
+//   yield true;
+//   console.log('watchCreateTaskAction');
+// }
+
+function* filterTaskSaga({ payload }) {
+  // nguoi dung nhap nhieu ky tu, bo tay ra khoi ban phim 0.5s moi xu ly, giam tai cho server
+  yield delay(500);
+  // console.log('filter task saga', payload);
+  const { keyword } = payload;
+  // console.log(keyword);
+  // lay du lieu tu store dung select
+  const list = yield select((state) => state.task.listTask);
+  // console.log('list: ', list);
+  const filteredTask = list.filter((task) =>
+    task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase()),
+  );
+  console.log('filteredTask', filteredTask);
+  yield put(filterTaskSuccess(filteredTask));
 }
 
 function* rootSaga() {
   yield fork(watchFetchListTaskAction);
-  yield fork(watchCreateTaskAction);
+  // yield fork(watchCreateTaskAction);
+  yield takeLatest(taskTypes.FILTER_TASK, filterTaskSaga);
 }
 export default rootSaga;

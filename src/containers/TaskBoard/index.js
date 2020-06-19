@@ -12,6 +12,7 @@ import TaskList from '../../components/TaskList/index';
 import * as taskActions from '../../actions/task';
 import { STATUSES } from '../../constants/index';
 import styles from './styles';
+import SearchBox from '../../components/SearchBox';
 
 // const listTask = [
 //   {
@@ -58,6 +59,27 @@ class TaskBoard extends Component {
     });
   };
 
+  handleFilter = (e) => {
+    // console.log('e: ', e);
+    const { value } = e.target;
+    const { taskActionCreators } = this.props;
+    const { filterTask } = taskActionCreators;
+    filterTask(value);
+  };
+
+  renderSearchBox() {
+    let xhtml = null;
+    xhtml = <SearchBox handleChange={this.handleFilter} />;
+    return xhtml;
+  }
+
+  renderForm() {
+    const { open } = this.state;
+    let xhtml = null;
+    xhtml = <TaskForm open={open} onClose={this.handleClose} />;
+    return xhtml;
+  }
+
   renderBoard() {
     const { listTask } = this.props;
     let xhtml = null;
@@ -77,13 +99,6 @@ class TaskBoard extends Component {
     return xhtml;
   }
 
-  renderForm() {
-    const { open } = this.state;
-    let xhtml = null;
-    xhtml = <TaskForm open={open} onClose={this.handleClose} />;
-    return xhtml;
-  }
-
   render() {
     const { classes } = this.props;
     return (
@@ -98,6 +113,7 @@ class TaskBoard extends Component {
           Thêm user
           {/* Thêm công việc */}
         </Button>
+        {this.renderSearchBox()}
         {this.renderBoard()}
         {this.renderForm()}
       </div>
@@ -109,6 +125,7 @@ TaskBoard.propTypes = {
   classes: PropTypes.object,
   taskActionCreators: PropTypes.shape({
     fetchListTask: PropTypes.func,
+    filterTask: PropTypes.func,
   }),
   listTask: PropTypes.array,
 };
