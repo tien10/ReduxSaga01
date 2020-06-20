@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+// constants -> actions -> reducers (modal.js) -> reducers (index.js) -> containers
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import TaskForm from '../../components/TaskForm/index';
 import TaskList from '../../components/TaskList/index';
 import * as taskActions from '../../actions/task';
+import * as modalActions from '../../actions/modal';
 import { STATUSES } from '../../constants/index';
 import styles from './styles';
 import SearchBox from '../../components/SearchBox';
@@ -54,9 +56,12 @@ class TaskBoard extends Component {
   };
 
   openForm = () => {
-    this.setState({
-      open: true,
-    });
+    // eslint-disable-next-line no-shadow
+    const { modalActions } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const { showModal, changeModalContent, changeModalTitle } = modalActions;
+    showModal();
+    changeModalTitle('Thêm mới user');
   };
 
   handleFilter = (e) => {
@@ -128,6 +133,12 @@ TaskBoard.propTypes = {
     filterTask: PropTypes.func,
   }),
   listTask: PropTypes.array,
+  modalActions: PropTypes.shape({
+    showModal: PropTypes.func,
+    hideModal: PropTypes.func,
+    changeModalTitle: PropTypes.func,
+    changeModalContent: PropTypes.func,
+  }),
 };
 
 const mapStateToProps = (state) => {
@@ -136,7 +147,10 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => {
-  return { taskActionCreators: bindActionCreators(taskActions, dispatch) };
+  return {
+    taskActionCreators: bindActionCreators(taskActions, dispatch),
+    modalActions: bindActionCreators(modalActions, dispatch),
+  };
 };
 
 export default withStyles(styles)(
