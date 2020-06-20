@@ -33,6 +33,7 @@ function* watchFetchListTaskAction() {
     yield take(taskTypes.FETCH_TASK);
     yield put(showLoading());
     const resp = yield call(getList);
+    // eslint-disable-next-line no-console
     console.log('resp: ', resp);
     const { status, data } = resp;
     if (status === STATUES_CODE.SUCCESS) {
@@ -62,6 +63,7 @@ function* filterTaskSaga({ payload }) {
   const filteredTask = list.filter((task) =>
     task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase()),
   );
+  // eslint-disable-next-line no-console
   console.log('filteredTask', filteredTask);
   yield put(filterTaskSuccess(filteredTask));
 }

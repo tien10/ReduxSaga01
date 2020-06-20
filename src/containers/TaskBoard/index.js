@@ -8,13 +8,14 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import TaskForm from '../../components/TaskForm/index';
+
 import TaskList from '../../components/TaskList/index';
 import * as taskActions from '../../actions/task';
 import * as modalActions from '../../actions/modal';
 import { STATUSES } from '../../constants/index';
 import styles from './styles';
 import SearchBox from '../../components/SearchBox';
+import TaskForm from '../TaskForm';
 
 // const listTask = [
 //   {
@@ -56,12 +57,16 @@ class TaskBoard extends Component {
   };
 
   openForm = () => {
-    // eslint-disable-next-line no-shadow
-    const { modalActions } = this.props;
+    const { modalActionCreators } = this.props;
     // eslint-disable-next-line no-unused-vars
-    const { showModal, changeModalContent, changeModalTitle } = modalActions;
+    const {
+      showModal,
+      changeModalContent,
+      changeModalTitle,
+    } = modalActionCreators;
     showModal();
     changeModalTitle('Thêm mới user');
+    changeModalContent(<TaskForm />);
   };
 
   handleFilter = (e) => {
@@ -133,7 +138,7 @@ TaskBoard.propTypes = {
     filterTask: PropTypes.func,
   }),
   listTask: PropTypes.array,
-  modalActions: PropTypes.shape({
+  modalActionCreators: PropTypes.shape({
     showModal: PropTypes.func,
     hideModal: PropTypes.func,
     changeModalTitle: PropTypes.func,
@@ -149,7 +154,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     taskActionCreators: bindActionCreators(taskActions, dispatch),
-    modalActions: bindActionCreators(modalActions, dispatch),
+    modalActionCreators: bindActionCreators(modalActions, dispatch),
   };
 };
 
