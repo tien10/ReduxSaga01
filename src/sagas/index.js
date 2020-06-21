@@ -1,21 +1,24 @@
 import {
-  fork,
-  take,
   call,
-  put,
   delay,
+  fork,
+  put,
+  take,
+  takeEvery,
   takeLatest,
-  select,
 } from 'redux-saga/effects';
-import * as taskTypes from '../constants/task';
-import { getList } from '../apis/task';
-import { STATUES_CODE } from '../constants';
+import { hideModal } from '../actions/modal';
 import {
-  fetchListTaskSuccess,
+  addTaskFailed,
+  addTaskSuccess,
+  fetchListTask,
   fetchListTaskFailed,
-  filterTaskSuccess,
+  fetchListTaskSuccess,
 } from '../actions/task';
-import { showLoading, hideLoading } from '../actions/ui';
+import { hideLoading, showLoading } from '../actions/ui';
+import { addTask, getList } from '../apis/task';
+import { STATUES_CODE, STATUSES } from '../constants';
+import * as taskTypes from '../constants/task';
 
 /*
 B1: Thuc thi action fetch task
@@ -30,9 +33,11 @@ B5: Thuc thi cac cong viec tiep theo
 
 function* watchFetchListTaskAction() {
   while (true) {
-    yield take(taskTypes.FETCH_TASK);
+    const action = yield take(taskTypes.FETCH_TASK);
     yield put(showLoading());
-    const resp = yield call(getList);
+    console.log('action: ', action);
+    const { params } = action.payload;
+    const resp = yield call(getList, params);
     // eslint-disable-next-line no-console
     console.log('resp: ', resp);
     const { status, data } = resp;
@@ -56,21 +61,44 @@ function* filterTaskSaga({ payload }) {
   yield delay(500);
   // console.log('filter task saga', payload);
   const { keyword } = payload;
-  // console.log(keyword);
-  // lay du lieu tu store dung select
-  const list = yield select((state) => state.task.listTask);
-  // console.log('list: ', list);
-  const filteredTask = list.filter((task) =>
-    task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase()),
-  );
-  // eslint-disable-next-line no-console
-  console.log('filteredTask', filteredTask);
-  yield put(filterTaskSuccess(filteredTask));
+  yield put(fetchListTask({ q: keyword }));
+  // // console.log(keyword);
+  // // lay du lieu tu store dung select
+  // const list = yield select((state) => state.task.listTask);
+  // // console.log('list: ', list);
+  // const filteredTask = list.filter((task) =>
+  //   task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase()),
+  // );
+  // // eslint-disable-next-line no-console
+  // console.log('filteredTask', filteredTask);
+  // yield put(filterTaskSuccess(filteredTask));
+}
+
+function* addTaskSaga({ payload }) {
+  const { title, description } = payload;
+  yield put(showLoading());
+  // goi api
+  const resp = yield call(addTask, {
+    title,
+    description,
+    status: STATUSES[0].value,
+  });
+  console.log('resp addTask: ', resp);
+  const { data, status } = resp;
+  if (status === STATUES_CODE.CREATED) {
+    yield put(addTaskSuccess(data));
+    yield put(hideModal());
+  } else {
+    yield put(addTaskFailed(data));
+  }
+  yield delay(1000);
+  yield put(hideLoading());
 }
 
 function* rootSaga() {
   yield fork(watchFetchListTaskAction);
   // yield fork(watchCreateTaskAction);
   yield takeLatest(taskTypes.FILTER_TASK, filterTaskSaga);
+  yield takeEvery(taskTypes.ADD_TASK, addTaskSaga);
 }
 export default rootSaga;
