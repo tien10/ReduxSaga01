@@ -10,7 +10,7 @@ import TaskBoard from '../TaskBoard/index';
 import styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
 import GlobalLoading from '../../components/GlobalLoading';
-import Modal from '../../components/Modal';
+import CommonModal from '../../components/CommonModal';
 
 const store = configureStore();
 
@@ -25,7 +25,7 @@ class App extends Component {
         <ThemeProvider theme={theme}>
           <ToastContainer />
           <GlobalLoading />
-          <Modal />
+          <CommonModal />
           <TaskBoard />
         </ThemeProvider>
       </Provider>

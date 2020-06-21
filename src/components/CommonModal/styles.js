@@ -11,9 +11,6 @@ const styles = (theme) => ({
     // padding: theme.spacing(2, 4, 3),
     outline: 'none',
   },
-  textField: {
-    width: '100%',
-  },
   header: {
     backgroundColor: theme.color.primary,
     color: theme.color.textColor,

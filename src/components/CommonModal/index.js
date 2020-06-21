@@ -37,16 +37,16 @@ CommonModal.propTypes = {
   }),
 };
 
-const mapStateToProps = (state) => {
-  return {
-    open: state.modal.showModal,
-    component: state.modal.component,
-    title: state.modal.title,
-  };
-};
+const mapStateToProps = (state) => ({
+  open: state.modal.showModal,
+  component: state.modal.component,
+  title: state.modal.title,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return { modalActionCreators: bindActionCreators(modalActions, dispatch) };
-};
+const mapDispatchToProps = (dispatch) => ({
+  modalActionCreators: bindActionCreators(modalActions, dispatch),
+});
+
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
 export default compose(withStyles(styles), withConnect)(CommonModal);

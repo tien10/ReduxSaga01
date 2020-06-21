@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import TaskList from '../../components/TaskList/index';
 import * as taskActions from '../../actions/task';
 import * as modalActions from '../../actions/modal';
@@ -41,7 +40,7 @@ import TaskForm from '../TaskForm';
 class TaskBoard extends Component {
   // eslint-disable-next-line react/state-in-constructor
   state = {
-    open: false,
+    // open: false,
   };
 
   componentDidMount() {
@@ -52,7 +51,7 @@ class TaskBoard extends Component {
 
   handleClose = () => {
     this.setState({
-      open: false,
+      // open: false,
     });
   };
 
@@ -83,12 +82,14 @@ class TaskBoard extends Component {
     return xhtml;
   }
 
-  renderForm() {
-    const { open } = this.state;
-    let xhtml = null;
-    xhtml = <TaskForm open={open} onClose={this.handleClose} />;
-    return xhtml;
-  }
+  // bo renderForm()
+
+  // renderForm() {
+  //   const { open } = this.state;
+  //   let xhtml = null;
+  //   xhtml = <TaskForm open={open} onClose={this.handleClose} />;
+  //   return xhtml;
+  // }
 
   renderBoard() {
     const { listTask } = this.props;
@@ -125,7 +126,7 @@ class TaskBoard extends Component {
         </Button>
         {this.renderSearchBox()}
         {this.renderBoard()}
-        {this.renderForm()}
+        {/* {this.renderForm()} */}
       </div>
     );
   }
