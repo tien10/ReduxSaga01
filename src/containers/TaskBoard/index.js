@@ -39,9 +39,9 @@ import TaskForm from '../TaskForm';
 
 class TaskBoard extends Component {
   // eslint-disable-next-line react/state-in-constructor
-  state = {
-    // open: false,
-  };
+  // state = {
+  //   // open: false,
+  // };
 
   componentDidMount() {
     const { taskActionCreators } = this.props;
@@ -49,15 +49,18 @@ class TaskBoard extends Component {
     fetchListTask();
   }
 
-  handleClose = () => {
-    this.setState({
-      // open: false,
-    });
-  };
+  // handleClose = () => {
+  //   this.setState({
+  //     // open: false,
+  //   });
+  // };
 
   openForm = () => {
     const { modalActionCreators } = this.props;
     // eslint-disable-next-line no-unused-vars
+    const { taskActionCreators } = this.props;
+    const { setTaskEditing } = taskActionCreators;
+    setTaskEditing(null);
     const {
       showModal,
       changeModalContent,
@@ -76,12 +79,6 @@ class TaskBoard extends Component {
     filterTask(value);
   };
 
-  renderSearchBox() {
-    let xhtml = null;
-    xhtml = <SearchBox handleChange={this.handleFilter} />;
-    return xhtml;
-  }
-
   // bo renderForm()
 
   // renderForm() {
@@ -90,6 +87,27 @@ class TaskBoard extends Component {
   //   xhtml = <TaskForm open={open} onClose={this.handleClose} />;
   //   return xhtml;
   // }
+
+  handleEditTask = (task) => {
+    console.log('task: ', task);
+    const { taskActionCreators, modalActionCreators } = this.props;
+    const { setTaskEditing } = taskActionCreators;
+    setTaskEditing(task);
+    const {
+      showModal,
+      changeModalContent,
+      changeModalTitle,
+    } = modalActionCreators;
+    showModal();
+    changeModalTitle('Cập nhật user');
+    changeModalContent(<TaskForm />);
+  };
+
+  renderSearchBox() {
+    let xhtml = null;
+    xhtml = <SearchBox handleChange={this.handleFilter} />;
+    return xhtml;
+  }
 
   renderBoard() {
     const { listTask } = this.props;
@@ -102,7 +120,12 @@ class TaskBoard extends Component {
             (task) => task.status === status.value,
           );
           return (
-            <TaskList tasks={taskFilterd} status={status} key={status.value} />
+            <TaskList
+              tasks={taskFilterd}
+              status={status}
+              key={status.value}
+              onClickEdit={this.handleEditTask}
+            />
           );
         })}
       </Grid>
@@ -137,6 +160,7 @@ TaskBoard.propTypes = {
   taskActionCreators: PropTypes.shape({
     fetchListTask: PropTypes.func,
     filterTask: PropTypes.func,
+    setTaskEditing: PropTypes.func,
   }),
   listTask: PropTypes.array,
   modalActionCreators: PropTypes.shape({

@@ -89,3 +89,38 @@ export const addTaskFailed = (error) => {
     },
   };
 };
+
+export const setTaskEditing = (task) => {
+  return {
+    type: taskConstants.SET_TASK_EDITING,
+    payload: {
+      task,
+    },
+  };
+};
+
+export const updateTask = (title, description) => {
+  return {
+    type: taskConstants.UPDATE_TASK,
+    payload: {
+      title,
+      description,
+    },
+  };
+};
+export const updateTaskSuccess = (data) => {
+  return {
+    type: taskConstants.UPDATE_TASK_SUCCESS,
+    payload: {
+      data,
+    },
+  };
+};
+export const updateTaskFailed = (error) => {
+  return {
+    type: taskConstants.UPDATE_TASK_FAILED,
+    payload: {
+      error,
+    },
+  };
+};

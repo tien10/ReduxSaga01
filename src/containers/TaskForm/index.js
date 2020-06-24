@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-import { withStyles, Grid, Box } from '@material-ui/core';
+import { withStyles, Grid, Box, MenuItem } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 // import TextField from '@material-ui/core/TextField';
@@ -11,6 +11,7 @@ import * as taskActions from '../../actions/task';
 import styles from './styles';
 import validate from './validate';
 import renderTextField from '../../components/FormHelper/TextField';
+import renderSelectField from '../../components/FormHelper/Select';
 
 class TaskForm extends Component {
   handleSubmitForm = (data) => {
@@ -38,9 +39,32 @@ class TaskForm extends Component {
     return error;
   };
 
+  rederStatusSelection() {
+    let xhtml = null;
+    const { taskEditing, classes } = this.props;
+    if (taskEditing && taskEditing.id) {
+      xhtml = (
+        <Field
+          name="status"
+          id="status"
+          component={renderSelectField}
+          label="User types"
+          className={classes.select}
+          // validate={[this.required, this.minLength5]}
+        >
+          <MenuItem value={0}>Normal User</MenuItem>
+          <MenuItem value={1}>Vip User</MenuItem>
+          <MenuItem value={2}>Admin User</MenuItem>
+        </Field>
+      );
+    }
+    return xhtml;
+  }
+
   render() {
     // console.log('this.props: ', this.props);
     // console.log('props: ', this.props);
+    // console.log('task Editing: ', this.props.taskEditing);
     const {
       classes,
       modalActionCreators,
@@ -61,6 +85,7 @@ class TaskForm extends Component {
               className={classes.textField}
               margin="normal"
               // validate={[this.required, this.minLength5]}
+              // value={taskEditing ? taskEditing.title : ''}
             />
           </Grid>
           <Grid item md={12}>
@@ -73,8 +98,10 @@ class TaskForm extends Component {
               margin="normal"
               multiline
               rowsMax={4}
+              // value={taskEditing ? taskEditing.description : ''}
             />
           </Grid>
+          {this.rederStatusSelection()}
           <Grid item md={12}>
             <Box display="flex" flexDirection="row-reverse" mt={2}>
               <Box ml={1}>
@@ -113,9 +140,19 @@ TaskForm.propTypes = {
   taskActionCreators: PropTypes.shape({
     addTask: PropTypes.func,
   }),
+  taskEditing: PropTypes.object,
 };
 
-const mapStateToProps = null;
+const mapStateToProps = (state) => ({
+  taskEditing: state.task.taskEditing,
+  initialValues: {
+    title: state.task.taskEditing ? state.task.taskEditing.title : null,
+    description: state.task.taskEditing
+      ? state.task.taskEditing.description
+      : null,
+    status: state.task.taskEditing ? state.task.taskEditing.status : null,
+  },
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {

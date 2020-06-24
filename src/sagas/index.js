@@ -35,7 +35,7 @@ function* watchFetchListTaskAction() {
   while (true) {
     const action = yield take(taskTypes.FETCH_TASK);
     yield put(showLoading());
-    console.log('action: ', action);
+    // console.log('action: ', action);
     const { params } = action.payload;
     const resp = yield call(getList, params);
     // eslint-disable-next-line no-console
@@ -83,7 +83,7 @@ function* addTaskSaga({ payload }) {
     description,
     status: STATUSES[0].value,
   });
-  console.log('resp addTask: ', resp);
+  // console.log('resp addTask: ', resp);
   const { data, status } = resp;
   if (status === STATUES_CODE.CREATED) {
     yield put(addTaskSuccess(data));
