@@ -16,10 +16,14 @@ import renderSelectField from '../../components/FormHelper/Select';
 class TaskForm extends Component {
   handleSubmitForm = (data) => {
     console.log('data: ', data);
-    const { taskActionCreators } = this.props;
-    const { addTask } = taskActionCreators;
-    const { title, description } = data;
-    addTask(title, description);
+    const { taskActionCreators, taskEditing } = this.props;
+    const { addTask, updateTask } = taskActionCreators;
+    const { title, description, status } = data;
+    if (taskEditing && taskEditing.id) {
+      updateTask(title, description, status);
+    } else {
+      addTask(title, description);
+    }
   };
 
   required = (value) => {
@@ -139,6 +143,7 @@ TaskForm.propTypes = {
   invalid: PropTypes.bool,
   taskActionCreators: PropTypes.shape({
     addTask: PropTypes.func,
+    updateTask: PropTypes.func,
   }),
   taskEditing: PropTypes.object,
 };

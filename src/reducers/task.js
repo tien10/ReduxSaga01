@@ -64,6 +64,33 @@ const reducer = (state = initialState, action) => {
         taskEditing: task,
       };
     }
+    case taskConstants.UPDATE_TASK: {
+      return {
+        ...state,
+        // xoa taskEditing khi them moi task
+        // taskEditing: null,
+      };
+    }
+    case taskConstants.UPDATE_TASK_SUCCESS: {
+      const { data } = action.payload;
+      const { listTask } = state;
+      const index = listTask.findIndex((item) => item.id === data.id);
+      if (index !== -1) {
+        const newList = [
+          ...listTask.splice(0, index),
+          data,
+          ...listTask.splice(index + 1),
+        ];
+        return {
+          ...state,
+          listTask: newList,
+        };
+      }
+      return {
+        ...state,
+        listTask: [data].concat(state.listTask),
+      };
+    }
     default:
       return state;
   }

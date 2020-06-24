@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable class-methods-use-this */
 // constants -> actions -> reducers (modal.js) -> reducers (index.js) -> containers
-import { withStyles } from '@material-ui/core';
+import { withStyles, Box } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
@@ -103,6 +104,47 @@ class TaskBoard extends Component {
     changeModalContent(<TaskForm />);
   };
 
+  showModalDeleteTask = (task) => {
+    console.log('task: ', task);
+    const { modalActionCreators, classes } = this.props;
+    const {
+      showModal,
+      hideModal,
+      changeModalContent,
+      changeModalTitle,
+    } = modalActionCreators;
+    showModal();
+    changeModalTitle('Xóa user');
+    changeModalContent(
+      <div className={classes.modalDelete}>
+        <div className={classes.modalConfirmText}>
+          Bạn chắc chắn muốn xóa{' '}
+          <span className={classes.modalConfirmTextBold}>{task.title}</span>?
+        </div>
+        <Box display="flex" flexDirection="row-reverse" mt={2}>
+          <Box ml={1}>
+            <Button variant="contained" color="secondary" onClick={hideModal}>
+              Hủy Bỏ
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.handleDeleteTask(task)}
+            >
+              Đồng Ý
+            </Button>
+          </Box>
+        </Box>
+      </div>,
+    );
+  };
+
+  handleDeleteTask(task) {
+    console.log('task delete: ', task);
+  }
+
   renderSearchBox() {
     let xhtml = null;
     xhtml = <SearchBox handleChange={this.handleFilter} />;
@@ -125,6 +167,7 @@ class TaskBoard extends Component {
               status={status}
               key={status.value}
               onClickEdit={this.handleEditTask}
+              onClickDelete={this.showModalDeleteTask}
             />
           );
         })}

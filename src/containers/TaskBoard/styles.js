@@ -16,5 +16,8 @@ const styles = (theme) => ({
     backgroundColor: theme.color.primary,
     color: theme.shape.textColor,
   },
+  modalConfirmTextBold: {
+    fontWeight: 700,
+  },
 });
 export default styles;
